@@ -1,0 +1,30 @@
+# ── Scraping ──────────────────────────────────────────────────────────────────
+playwright>=1.35.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# ── Base de datos ─────────────────────────────────────────────────────────────
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.7
+python-dotenv>=1.0.0
+
+# ── CLI y utilidades ──────────────────────────────────────────────────────────
+rich>=13.0.0
+click>=8.1.0
+
+# ── EDA y visualización (eda_analysis.py) ────────────────────────────────────
+pandas>=2.2.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+wordcloud>=1.9.0
+
+# ── NLP y búsqueda semántica (embeddings_indexer.py, semantic_search.py) ─────
+sentence-transformers>=2.7.0
+faiss-cpu>=1.7.4
+rank-bm25>=0.2.2
+
+# ── Machine Learning y clasificación (classifier.py) ─────────────────────────
+scikit-learn>=1.4.0
+
+# ── Explicabilidad (classifier.py --shap) ────────────────────────────────────
+shap>=0.45.0

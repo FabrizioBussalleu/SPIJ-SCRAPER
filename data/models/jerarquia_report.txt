@@ -1,0 +1,12 @@
+CV F1-macro (5-fold): 0.4742 +/- 0.0114
+
+              precision    recall  f1-score   support
+
+    Ley/Cód.     1.0000    0.3333    0.5000         3
+   D.Supremo     0.9000    1.0000    0.9474         9
+  Resolución     0.0000    0.0000    0.0000         4
+       Otros     0.9655    1.0000    0.9825       140
+
+    accuracy                         0.9615       156
+   macro avg     0.7164    0.5833    0.6075       156
+weighted avg     0.9376    0.9615    0.9460       156
