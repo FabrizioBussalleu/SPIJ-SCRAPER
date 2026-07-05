@@ -1,6 +1,15 @@
-# SPIJ Scraper
+# Modelo de Búsqueda Sistemática de Leyes en Función a un Caso - SPIJ Scraper
 
-Scraper modular para extraer metadatos de normas del portal SPIJ (Ministerio de Justicia del Perú).
+## Objetivo
+Construir un sistema de recuperación semántica basado en embeddings vectoriales que comprenda el significado de una consulta en lenguaje natural y devuelva las normas peruanas más relevantes del Sistema Peruano de Información Jurídica (SPIJ), filtradas por jerarquía y vigencia.
+
+## Integrantes
+* Aaron Alvaro Felices Vallejos - U202315164
+* Fabrizio Bussalleu Salcedo - U202315655
+* Diego Alexander Huaman Sirio - u20211f983
+
+## Dataset
+Los datos provienen de los endpoints internos del Sistema Peruano de Información Jurídica (SPIJ) del Ministerio de Justicia. El corpus consta de 1,035 normas vigentes y derogadas extraídas mediante un scraper propio. Los datos son semi-estructurados e incluyen campos como el texto completo en HTML, tipo de norma, estado de vigencia, nivel jerárquico y relaciones de citas inter-normativas.
 
 **✨ Nueva funcionalidad:** Validación automática de vigencia de normas antes del scraping.
 
@@ -77,8 +86,21 @@ El scraper ahora puede detectar automáticamente si una norma sigue vigente:
 | `export` | Exportar resultados a CSV/JSON |
 | `list-versions` | Ver historial de versiones |
 
-## Notas importantes
+## Notas importante
 
 - **Rate limiting**: Se recomienda usar `--rate-limit 2.0` o superior para validación
 - **Robots.txt**: El scraper respeta las políticas del sitio
 - **Performance**: La validación es más lenta pero más precisa
+
+## Conclusiones y Trabajo Futuro
+
+* **Infraestructura Implementada:** Se construyó y ejecutó exitosamente la infraestructura técnica de un motor de búsqueda semántica para leyes peruanas sobre el corpus real del SPIJ[cite: 1]. El sistema consta de cinco módulos construidos en Python operando en producción[cite: 1].
+* **Extracción de Datos:** El scraper modular logró autenticarse en las APIs del SPIJ y recolectar un total de 1,035 normas junto con 1,839 citas inter-normativas en aproximadamente 22 minutos de ejecución[cite: 1]. Adicionalmente, el parser implementado permite segmentar textos en artículos y clasificar cuatro tipos de relación en las citas[cite: 1].
+* **Rendimiento de los Modelos de Búsqueda:** Se evaluó un motor semántico (paraphrase-multilingual-mpnet-base-v2 con FAISS) contra un baseline léxico (BM25) utilizando 12 consultas curadas[cite: 1]. El modelo BM25 alcanzó un Precision@5 de 0.550 y un MRR@5 de 0.778[cite: 1]. Por su parte, el modelo semántico superó al léxico en Recall@5 obteniendo 0.325 (una mejora de 0.032), demostrando su capacidad de capturar la sinonimia terminológica que el modelo léxico pierde[cite: 1].
+* **Clasificación y Explicabilidad:** El proyecto deja disponibles clasificadores supervisados (Regresión Logística y Random Forest sobre TF-IDF) con sus respectivos análisis de explicabilidad basados en SHAP[cite: 1].
+* **Limitaciones:** El conjunto de datos extraído presenta un desbalance pronunciado con 1,028 normas vigentes frente a solo 7 derogadas[cite: 1]. Asimismo, el corpus actual de 1,035 normas no representa el universo completo del SPIJ, el cual asciende a más de 25,000 normas[cite: 1].
+* **Trabajo Futuro:** Los siguientes pasos del proyecto incluyen ampliar el scraping para incorporar normas derogadas explícitamente[cite: 1]. También se proyecta desarrollar una interfaz web para el buscador e integrar un sistema de re-ranking por nivel jerárquico para priorizar leyes frente a resoluciones[cite: 1].
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para más detalles.
