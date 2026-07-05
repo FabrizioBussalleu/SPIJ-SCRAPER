@@ -81,4 +81,39 @@ El scraper ahora puede detectar automáticamente si una norma sigue vigente:
 
 - **Rate limiting**: Se recomienda usar `--rate-limit 2.0` o superior para validación
 - **Robots.txt**: El scraper respeta las políticas del sitio
-- **Performance**: La validación es más lenta pero más precisa
+- **Performance**: La validación es más lento pero más precisa
+
+## Presentación del TP (retroalimentación del profesor)
+
+Para generar **todos los gráficos y la guía de diapositivas numeradas**:
+
+```bash
+# Generación completa (EDA + búsqueda + clasificadores + XAI)
+python presentation_report.py --k 5 --shap
+
+# Solo búsqueda y EDA (sin re-entrenar modelos)
+python presentation_report.py --skip-train --k 5
+```
+
+**Salidas:**
+| Ruta | Contenido |
+|------|-----------|
+| `exports/presentacion/` | Gráficos numerados 01–13 para slides |
+| `exports/presentacion/evaluation_report.txt` | Métricas + interpretación legal + errores FP/FN |
+| `docs/GUIA_PRESENTACION.md` | Guía de 14 diapositivas con qué decir en cada una |
+| `data/models/vigencia_methodology.txt` | Parámetros CV, TF-IDF, LogReg documentados |
+
+**Scripts individuales:**
+```bash
+python eda_analysis.py
+python evaluate.py --k 5 --charts --output exports/presentacion/evaluation_report.txt
+python classifier.py --task vigencia --presentation --shap
+```
+
+### Mejoras incluidas (rama `feature/mejoras-tp`)
+- Interpretación contextual de Precision, Recall, MRR, NDCG para abogados
+- Análisis de falsos positivos y falsos negativos en búsqueda
+- F2 (F-beta) además de F1 — prioriza recall en vigencia (falso negativo crítico)
+- Metodología CV documentada (StratifiedKFold 5-fold, parámetros completos)
+- Gráficos XAI: coeficientes LogReg + SHAP con anotaciones jurídicas
+- Guía de presentación con diapositivas numeradas
