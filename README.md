@@ -85,6 +85,24 @@ El scraper ahora puede detectar automáticamente si una norma sigue vigente:
 
 ## Presentación del TP (retroalimentación del profesor)
 
+### Setup local (primera vez)
+
+```powershell
+cd D:\2026-01\APLIDATASCIENCE\SPIJ-SCRAPER
+
+# Usar Python 3 (no el python 2.7 del PATH)
+py -3 -m pip install -r requirements.txt
+py -3 setup_local.py              # import JSON + indice + graficos
+py -3 setup_local.py --scrape 200 # o scrapear del SPIJ en vivo
+```
+
+Para el corpus completo (~1035 normas, ~22 min):
+```powershell
+py -3 main.py scrape --validate-all --rate-limit 1.5
+py -3 embeddings_indexer.py --rebuild
+py -3 presentation_report.py --k 5 --shap
+```
+
 Para generar **todos los gráficos y la guía de diapositivas numeradas**:
 
 ```bash

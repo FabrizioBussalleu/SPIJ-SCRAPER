@@ -1,0 +1,12 @@
+MÉTODO — Modelo de JERARQUIA
+============================================================
+Algoritmo:     Random Forest
+Vectorizador:  TF-IDF (max_features=15000, ngram_range=(1,2), sublinear_tf=True, min_df=2)
+Clasificador:  n_estimators=100, max_depth=10, class_weight='balanced'
+Partición:     train_test_split test_size=0.15, stratify=y, random_state=42
+Validación CV: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+Métricas CV:   F1-macro, F2-macro (β=2)
+
+Resultados por fold (conjunto de entrenamiento):
+  F1_MACRO: 0.7931 ± 0.1179  (folds: ['0.867', '0.896', '0.680', '0.622', '0.900'])
+  F2_MACRO: 0.7644 ± 0.1114  (folds: ['0.821', '0.863', '0.668', '0.597', '0.874'])

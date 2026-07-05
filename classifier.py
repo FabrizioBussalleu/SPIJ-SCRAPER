@@ -29,6 +29,8 @@ import pickle
 from pathlib import Path
 from typing import List
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -250,10 +252,14 @@ def train_vigencia(df: pd.DataFrame, run_shap: bool = False, presentation: bool 
     pipeline.fit(X_train, y_train)
     y_pred = pipeline.predict(X_test)
 
+    labels = [0, 1]
+    target_names = ["Derogada (0)", "Vigente (1)"]
     report = classification_report(
         y_test, y_pred,
-        target_names=["Derogada (0)", "Vigente (1)"],
+        labels=labels,
+        target_names=target_names,
         digits=4,
+        zero_division=0,
     )
     error_analysis = _analyze_vigencia_errors(
         pipeline, X_test, y_test, y_pred,
@@ -283,7 +289,7 @@ def train_vigencia(df: pd.DataFrame, run_shap: bool = False, presentation: bool 
     )
     (MODEL_DIR / "vigencia_report.txt").write_text(full_report, encoding="utf-8")
 
-    cm = confusion_matrix(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred, labels=labels)
     pres_dir = ensure_dir(PRESENTATION_DIR) if presentation else MODEL_DIR
     plot_confusion_enhanced(
         cm, ["Derogada", "Vigente"],

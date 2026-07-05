@@ -1,0 +1,225 @@
+
+=================================================================
+  RESULTADOS AGREGADOS  (n=12 consultas, k=5)
+=================================================================
+  Métrica                 Semántico         BM25          Δ
+  -------------------------------------------------------
+  Precision@5                0.2833       0.3500    -0.067
+  Recall@5                   0.2375       0.2222 +    0.015
+  MRR@5                      0.6389       0.6667    -0.028
+  NDCG@5                     0.6835       0.6954    -0.012
+=================================================================
+
+======================================================================
+  INTERPRETACIÓN PARA EL CONTEXTO LEGAL
+======================================================================
+
+Precisión@5 = 0.350 (baja). Solo 35% de los resultados son pertinentes. La búsqueda genera ruido: muchas normas mostradas no responden a la consulta.
+
+  → Semántico — Precisión@5 = 0.283 (baja). Solo 28% de los resultados son pertinentes. La búsqueda genera ruido: muchas normas mostradas no responden a la consulta.
+
+Recall@5 = 0.238 (cobertura limitada). Solo 24% de los conceptos jurídicos buscados aparecen. Alto riesgo de no encontrar la norma aplicable si el título usa formulación distinta.
+
+  → BM25 — Recall@5 = 0.222 (cobertura limitada). Solo 22% de los conceptos jurídicos buscados aparecen. Alto riesgo de no encontrar la norma aplicable si el título usa formulación distinta.
+
+MRR@5 = 0.667 (equivalente a acertar en posición 1.5). Indica si el primer resultado relevante aparece en las primeras posiciones del ranking. La norma correcta suele aparecer pronto, pero no siempre en el primer resultado.
+
+  → Semántico — MRR@5 = 0.639 (equivalente a acertar en posición 1.6). Indica si el primer resultado relevante aparece en las primeras posiciones del ranking. La norma correcta suele aparecer pronto, pero no siempre en el primer resultado.
+
+NDCG@5 mide calidad del ranking (1.0 = perfecto). Ordenamiento aceptable. Los resultados relevantes están presentes pero no siempre en las mejores posiciones. Ambos motores ordenan de forma similar (diferencia 0.012).
+
+──────────────────────────────────────────────────────────────────────
+  CONCLUSIÓN PARA LA PRESENTACIÓN:
+  • BM25 gana en precisión/MRR porque los títulos legales usan formulación
+    formal y exacta (ej. 'Ley de Protección de la Madre Trabajadora').
+  • El modelo semántico gana en recall: recupera más conceptos cuando el
+    abogado usa lenguaje coloquial distinto al título oficial.
+  • NDCG penaliza resultados relevantes en posiciones bajas: un abogado
+    rara vez revisa más de 3–5 títulos antes de decidir.
+
+======================================================================
+  ANÁLISIS DE ERRORES (Falsos positivos y negativos)
+======================================================================
+
+  Consulta [01]: despido de trabajadora embarazada gestante gravide… (Semántico)
+    Falsos positivos (4):
+      • Disponen publicación de proyecto de Reglamento de la Ley N° 32132, Ley
+      • Designan Asesora I de la Unidad de Desarrollo Integral de las Familias
+      • Ley que modifica la Ley 32185, Ley de Presupuesto del Sector Público p
+    Keywords NO recuperadas (FN): maternidad, madre trabajadora, gestante, embarazo
+
+  Consulta [01]: despido de trabajadora embarazada gestante gravide… (BM25)
+    Falsos positivos (5):
+      • Aprueban el “Procedimiento de entrega de información sobre el Sistema 
+      • Ley de saneamiento de límites y tramos de la provincia de Ferreñafe y 
+      • Designan Secretario de Seguridad de la Casa de Gobierno de la Secretar
+    Keywords NO recuperadas (FN): protección, maternidad, madre trabajadora, gestante, embarazo
+
+  Consulta [02]: contrato de trabajo a plazo fijo temporal… (Semántico)
+    Falsos positivos (4):
+      • Designan delegada del Ministerio de Trabajo y Promoción del Empleo ant
+      • Autorizan Transferencia Financiera a favor de la Universidad Nacional 
+      • Designan profesionales en diversos puestos de confianza del INDECI
+    Keywords NO recuperadas (FN): contrato de trabajo, plazo fijo, laboral
+
+  Consulta [02]: contrato de trabajo a plazo fijo temporal… (BM25)
+    Falsos positivos (5):
+      • Designan Directora de Seguridad y Salud en el Trabajo de la Dirección 
+      • Autorizan a la empresa REVISIONES TECNICAS ZEUS E.I.R.L., para operar 
+      • Prorrogan plazo de la determinación de la protección provisional del S
+    Keywords NO recuperadas (FN): contrato de trabajo, plazo fijo, temporal, laboral
+
+  Consulta [03]: protección del medio ambiente contaminación ambien… (Semántico)
+    Falsos positivos (4):
+      • Aprueban el “Procedimiento de entrega de información sobre el Sistema 
+      • Resolución de Consejo Directivo que resuelve el recurso de reconsidera
+      • Ley de saneamiento de límites y tramos de algunos distritos de la prov
+    Keywords NO recuperadas (FN): medio ambiente, contaminación, ecología
+
+  Consulta [03]: protección del medio ambiente contaminación ambien… (BM25)
+    Falsos positivos (3):
+      • Resolución de Consejo Directivo que resuelve el recurso de reconsidera
+      • Determinan la Protección Provisional del Sitio Arqueológico Arwaturo, 
+      • Determinan la Protección Provisional del Sitio Arqueológico Puyhuan, u
+    Keywords NO recuperadas (FN): medio ambiente, contaminación, ecología
+
+  Consulta [04]: impuesto a la renta personas naturales… (Semántico)
+    Falsos positivos (3):
+      • Postergan oportunidad desde la cual deben llevar sus registros en el S
+      • Índice de Precios al Por Mayor a Nivel Nacional, correspondiente al me
+      • Ley que modifica las Leyes 32486, 32509, 32521 y 32522, a fin de viabi
+    Keywords NO recuperadas (FN): renta, tributario
+
+  Consulta [04]: impuesto a la renta personas naturales… (BM25)
+    Falsos positivos (3):
+      • Autorizan transferencia financiera a favor de la Contraloría General d
+      • Autorizan Transferencia Financiera a favor de la Contraloría General d
+      • Autorizan transferencia financiera a favor de la Contraloría General d
+    Keywords NO recuperadas (FN): renta, tributo, tributario
+
+  Consulta [05]: licitación pública contrataciones del estado adqui… (Semántico)
+    Falsos positivos (3):
+      • Decreto Supremo que autoriza Transferencia de Partidas en el Presupues
+      • Modifican delegación de facultades en diversos funcionarios del MIDAGR
+      • Decreto Supremo que autoriza Transferencia de Partidas en el Presupues
+    Keywords NO recuperadas (FN): contratación, licitación, estado, compras públicas
+
+  Consulta [05]: licitación pública contrataciones del estado adqui… (BM25)
+    Falsos positivos (2):
+      • Modifican delegación de facultades en diversos funcionarios del MIDAGR
+      • Decreto Supremo que aprueba los topes máximos de capacidad anual para 
+    Keywords NO recuperadas (FN): licitación, compras públicas
+
+  Consulta [06]: violencia contra la mujer feminicidio… (Semántico)
+    Falsos positivos (4):
+      • Disponen publicación de proyecto de Reglamento de la Ley N° 32132, Ley
+      • Designan fiscal en la Coordinación Nacional de las Fiscalías Especiali
+      • Ley que modifica el Código Penal, Decreto Legislativo 635, el Código d
+    Keywords NO recuperadas (FN): violencia, feminicidio, género
+
+  Consulta [06]: violencia contra la mujer feminicidio… (BM25)
+    Falsos positivos (4):
+      • Designan fiscal en la Coordinación Nacional de las Fiscalías Especiali
+      • Designan representantes titular y alterno, del Ministerio de Desarroll
+      • Ley que promueve la vacunación contra el virus del papiloma humano (VP
+    Keywords NO recuperadas (FN): violencia, feminicidio, género
+
+  Consulta [07]: sistema nacional de salud seguro médico… (Semántico)
+    Keywords NO recuperadas (FN): seguro, médico, sanitario, SIS
+
+  Consulta [07]: sistema nacional de salud seguro médico… (BM25)
+    Keywords NO recuperadas (FN): seguro, médico, sanitario
+
+  Consulta [08]: educación básica regular colegios escuelas… (Semántico)
+    Falsos positivos (4):
+      • Ley que declara a la Institución Educativa Emblemática San Juan de Tru
+      • Ley que modifica la Ley 30220, Ley Universitaria, para incorporar al j
+      • Decreto Supremo que establece las funciones de la Comisión Multisector
+    Keywords NO recuperadas (FN): escuela, colegio, básica regular
+
+  Consulta [08]: educación básica regular colegios escuelas… (BM25)
+    Falsos positivos (1):
+      • Ley que modifica la Ley 30220, Ley Universitaria, para incorporar al j
+    Keywords NO recuperadas (FN): escuela, colegio, básica regular
+
+  Consulta [09]: inversión privada concesiones obras de infraestruc… (Semántico)
+    Falsos positivos (3):
+      • Autorizan transferencia financiera a favor del Ministerio de Vivienda,
+      • Aprueban otorgamiento de subvenciones a favor de diversos beneficiario
+      • Aprueban ejecución de expropiación del área afectada del inmueble para
+    Keywords NO recuperadas (FN): concesión, privado
+
+  Consulta [09]: inversión privada concesiones obras de infraestruc… (BM25)
+    Falsos positivos (2):
+      • Reconocen el Área de Conservación Privada “Llollo”, ubicada en el dist
+      • Modifican delegación de facultades en diversos funcionarios del MIDAGR
+    Keywords NO recuperadas (FN): inversión, concesión, privado
+
+  Consulta [10]: procedimiento administrativo general tramite entid… (Semántico)
+    Falsos positivos (4):
+      • Designan Director de Sistema Administrativo IV de la Oficina General d
+      • Aprueban el documento técnico denominado “Protocolo Base de Intercambi
+      • Modifican delegación de facultades en diversos funcionarios del MIDAGR
+    Keywords NO recuperadas (FN): procedimiento administrativo, trámite, entidad pública
+
+  Consulta [10]: procedimiento administrativo general tramite entid… (BM25)
+    Falsos positivos (3):
+      • Designan Director de Sistema Administrativo III de la Secretaría Gener
+      • Designan Director de Sistema Administrativo IV de la Oficina General d
+      • Autorizan difusión en consulta pública de proyecto normativo que actua
+    Keywords NO recuperadas (FN): trámite, entidad pública, administración
+
+  Consulta [11]: pension jubilacion sistema previsional AFP ONP… (Semántico)
+    Falsos positivos (5):
+      • Aprueban transferencia financiera a favor de la Contraloría General de
+      • Índice de reajuste diario a que se refiere el artículo 240º de la Ley 
+      • Postergan oportunidad desde la cual deben llevar sus registros en el S
+    Keywords NO recuperadas (FN): pensión, jubilación, AFP, ONP, previsional, retiro
+
+  Consulta [11]: pension jubilacion sistema previsional AFP ONP… (BM25)
+    Falsos positivos (3):
+      • Modifican el Reglamento de Gestión de Conducta de Mercado del Sistema 
+      • Índice de reajuste diario a que se refiere el artículo 240º de la Ley 
+      • Designan Director de Sistema Administrativo III de la Secretaría Gener
+    Keywords NO recuperadas (FN): pensión, jubilación, AFP, ONP, retiro
+
+  Consulta [12]: propiedad intelectual derechos de autor patentes m… (Semántico)
+    Falsos positivos (5):
+      • Autorizan Transferencia Financiera a favor del Instituto Nacional de C
+      • Aprueban otorgamiento de subvenciones a favor de diversos beneficiario
+      • Modifican el “Tarifario de Servicios Tecnológicos del Centro de Innova
+    Keywords NO recuperadas (FN): propiedad intelectual, derechos de autor, patente, marca
+
+  Consulta [12]: propiedad intelectual derechos de autor patentes m… (BM25)
+    Falsos positivos (5):
+      • Designan Directora de la Dirección de Catastro del Organismo de Formal
+      • Declaran Patrimonio Cultural de la Nación 66 bienes culturales muebles
+      • Aprueban el “Procedimiento de entrega de información sobre el Sistema 
+    Keywords NO recuperadas (FN): propiedad intelectual, derechos de autor, patente, marca
+
+  Palabras frecuentes en títulos de FALSOS POSITIVOS:
+    • ley: 24
+    • designan: 18
+    • sistema: 16
+    • favor: 14
+    • nacional: 13
+    • decreto: 13
+    • fiscal: 12
+    • provincia: 12
+    • autorizan: 12
+    • transferencia: 12
+
+  Keywords más omitidas (FALSOS NEGATIVOS):
+    • maternidad: 2 consultas sin recuperar
+    • madre trabajadora: 2 consultas sin recuperar
+    • gestante: 2 consultas sin recuperar
+    • embarazo: 2 consultas sin recuperar
+    • contrato de trabajo: 2 consultas sin recuperar
+    • plazo fijo: 2 consultas sin recuperar
+    • laboral: 2 consultas sin recuperar
+    • medio ambiente: 2 consultas sin recuperar
+    • contaminación: 2 consultas sin recuperar
+    • ecología: 2 consultas sin recuperar
+
+  ¿Palabras que confunden? Términos genéricos ('ley', 'decreto', 'aprueba')
+  aparecen en títulos tanto relevantes como irrelevantes, reduciendo precisión.

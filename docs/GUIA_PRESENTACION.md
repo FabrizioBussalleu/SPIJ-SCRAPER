@@ -1,6 +1,6 @@
 # Guía de Presentación — Búsqueda de Leyes SPIJ
 
-> Generado: 2026-07-05 13:53
+> Generado: 2026-07-05 15:00
 > Dataset de evaluación: 12 consultas jurídicas | k=5
 
 ---
@@ -153,7 +153,19 @@ de vigencia — igual que la alerta roja del portal."
 
 ## Archivos generados en esta ejecución
 
-- *(ejecutar scripts para generar)*
+- `01_eda_norms_by_type.png`
+- `02_eda_temporal.png`
+- `03_eda_wordcloud.png`
+- `04_eda_level_validity.png`
+- `05_eda_citation_types.png`
+- `06_metrics_comparison_k5.png`
+- `07_per_query_heatmap_k5.png`
+- `08_error_analysis_k5.png`
+- `09_vigencia_confusion_matrix.png`
+- `10_xai_vigencia_coefficients.png`
+- `11_vigencia_cv_scores.png`
+- `12_jerarquia_feature_importance.png`
+- `13_shap_vigencia.png`
 
 ## Comandos para regenerar
 

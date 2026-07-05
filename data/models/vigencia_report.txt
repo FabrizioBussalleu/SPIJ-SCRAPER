@@ -1,10 +1,63 @@
-CV F1 (5-fold): 0.9966 +/- 0.0028
+CV F1 (5-fold): 0.9960 +/- 0.0020
+CV F2 (5-fold): 0.9960 +/- 0.0034
+
+F1 = 0.9960 (balance precisión-recall). F2 = 0.9960 (recall superior a F1). Un falso negativo (marcar derogada como vigente) es crítico: el abogado podría citar una ley sin efecto. F2 penaliza más los falsos negativos que F1.
 
               precision    recall  f1-score   support
 
-Derogada (0)     0.0000    0.0000    0.0000         1
- Vigente (1)     0.9936    1.0000    0.9968       155
+Derogada (0)     0.0000    0.0000    0.0000         0
+ Vigente (1)     1.0000    1.0000    1.0000        89
 
-    accuracy                         0.9936       156
-   macro avg     0.4968    0.5000    0.4984       156
-weighted avg     0.9872    0.9936    0.9904       156
+    accuracy                         1.0000        89
+   macro avg     0.5000    0.5000    0.5000        89
+weighted avg     1.0000    1.0000    1.0000        89
+
+
+ANÁLISIS DE ERRORES — VIGENCIA
+--------------------------------------------------
+Falsos negativos (derogada → vigente, CRÍTICO): 0
+Falsos positivos (vigente → derogada): 0
+
+Palabras que el modelo asocia con DEROGADA (coeficiente negativo):
+  sin efecto, efecto, sin, legislativa, el reglamento, efecto sin, essalud, congreso que
+Palabras que el modelo asocia con VIGENTE (coeficiente positivo):
+  para, spij, informes, la, de la, de, en, información
+
+INTERPRETACIÓN XAI:
+  El modelo aprendió el mismo lenguaje jurídico que usa el scraper SPIJ.
+  Términos como 'derogado' y 'sustitúyese' tienen peso hacia derogada porque
+  el portal marca explícitamente esas alertas — el ML converge con la lógica
+  programada, sin reglas hardcodeadas en el clasificador.
+
+MÉTODO — Modelo de VIGENCIA
+============================================================
+Algoritmo:     Regresión Logística
+Vectorizador:  TF-IDF (max_features=20000, ngram_range=(1,2), sublinear_tf=True, min_df=2)
+Clasificador:  C=1.0, class_weight='balanced', max_iter=1000, solver='lbfgs'
+Partición:     train_test_split test_size=0.15, stratify=y, random_state=42
+Validación CV: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+Métricas CV:   F1, F2 (β=2, prioriza recall), precision, recall — solo sobre conjunto train en CV
+
+Resultados por fold (conjunto de entrenamiento):
+  F1: 0.9960 ± 0.0020  (folds: ['1.000', '0.995', '0.995', '0.995', '0.995'])
+  F2: 0.9960 ± 0.0034  (folds: ['1.000', '0.992', '0.998', '0.998', '0.992'])
+  PRECISION: 0.9960 ± 0.0049  (folds: ['1.000', '1.000', '0.990', '0.990', '1.000'])
+  RECALL: 0.9960 ± 0.0049  (folds: ['1.000', '0.990', '1.000', '1.000', '0.990'])
+
+F1 = 0.9960 (balance precisión-recall). F2 = 0.9960 (recall superior a F1). Un falso negativo (marcar derogada como vigente) es crítico: el abogado podría citar una ley sin efecto. F2 penaliza más los falsos negativos que F1.
+
+ANÁLISIS DE ERRORES — VIGENCIA
+--------------------------------------------------
+Falsos negativos (derogada → vigente, CRÍTICO): 0
+Falsos positivos (vigente → derogada): 0
+
+Palabras que el modelo asocia con DEROGADA (coeficiente negativo):
+  sin efecto, efecto, sin, legislativa, el reglamento, efecto sin, essalud, congreso que
+Palabras que el modelo asocia con VIGENTE (coeficiente positivo):
+  para, spij, informes, la, de la, de, en, información
+
+INTERPRETACIÓN XAI:
+  El modelo aprendió el mismo lenguaje jurídico que usa el scraper SPIJ.
+  Términos como 'derogado' y 'sustitúyese' tienen peso hacia derogada porque
+  el portal marca explícitamente esas alertas — el ML converge con la lógica
+  programada, sin reglas hardcodeadas en el clasificador.

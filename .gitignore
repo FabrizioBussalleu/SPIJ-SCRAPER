@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env.local
+
+# Datos locales (generados)
+data/norms.db
+data/index/
+data/cache/
+
+# Modelos entrenados (regenerables)
+data/models/*.pkl
+data/models/*.png
