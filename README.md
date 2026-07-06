@@ -1,72 +1,19 @@
 # SPIJ – Modelo de Búsqueda Semántica de Leyes (Trabajo Final 1ACC0219)
 
+Modelo de Búsqueda Sistemática de Leyes en Función a un Caso — SPIJ Scraper
+
+
+
 ## Objetivo
-Construir un sistema de Ciencia de Datos sobre el corpus legal del **SPIJ** (Sistema
-Peruano de Información Jurídica) que: (1) recupere las normas más relevantes para un
-caso descrito en lenguaje natural mediante **búsqueda semántica** (embeddings + FAISS)
-comparada con un baseline **BM25**; (2) clasifique el **nivel jerárquico** de una norma
-(Pirámide de Kelsen); y (3) prediga la **vigencia** de una disposición (vigente/derogada)
-usando las notas oficiales de derogación del SPIJ como verdad de referencia.
+Construir un sistema de recuperación semántica basado en embeddings vectoriales que comprenda el significado de una consulta en lenguaje natural y devuelva las normas peruanas más relevantes del Sistema Peruano de Información Jurídica (SPIJ), filtradas por jerarquía y vigencia.
 
 ## Integrantes
-- Aaron Alvaro Felices Vallejos – U202315164
-- Fabrizio Bussalleu Salcedo – U202315655
-- Diego Alexander Huaman Sirio – U20211F983
-
-Profesor: Carlos Fernando Montoya Cubas · Ciclo 2026-01
+* Aaron Alvaro Felices Vallejos - U202315164
+* Fabrizio Bussalleu Salcedo - U202315655
+* Diego Alexander Huaman Sirio - u20211f983
 
 ## Dataset
-- **Corpus de normas** (`ai-training-dataset/corpus_normas.json`, BD `data/norms_corpus.db`):
-  1 091 normas del SPIJ (1861–2026), 40 tipos, 5 817 citas inter-normativas. Generado con
-  `collect_corpus.py` desde las APIs internas del SPIJ.
-- **Dataset de vigencia por artículo** (`ai-training-dataset/vigencia_articulos.csv`):
-  1 075 artículos de los códigos del SPIJ etiquetados con las notas oficiales
-  `(*) Artículo derogado por…` → 430 derogados / 645 vigentes. Generado con
-  `build_vigencia_dataset.py`.
-
-## Estructura del repositorio
-```
-code/    -> código fuente (Python): scraper, EDA, clasificadores, búsqueda
-data/    -> base de datos (norms_corpus.db), índice FAISS, modelos y figuras
-ai-training-dataset/ -> exports del corpus y del dataset de vigencia (JSON/CSV)
-exports/ -> visualizaciones EDA y reporte de evaluación
-```
-
-## Pipeline reproducible
-```bash
-pip install -r requirements.txt
-python code/collect_corpus.py --target 900        # 1) corpus de normas -> SQLite
-python code/build_vigencia_dataset.py             # 2) dataset de vigencia por artículo
-python code/eda_analysis.py                        # 3) EDA -> exports/eda/
-python code/classifier.py --task ambos --shap      # 4) clasificadores + SHAP -> data/models/
-python code/embeddings_indexer.py --rebuild        # 5) índice FAISS (MiniLM multilingüe)
-python code/evaluate.py --k 5                       # 6) métricas Semántico vs BM25
-```
-
-## Resultados (ejecución real, ver informe)
-- **Recuperación (k=5, 12 consultas):** Semántico vs BM25 — Precision@5 0.550/0.583,
-  Recall@5 0.394/0.365, MRR@5 0.767/0.725, NDCG@5 0.780/0.748. El semántico gana en
-  recall, MRR y NDCG.
-- **Vigencia (artículo):** CV F1 = 0.973; test F1 Derogado = 0.911, Vigente = 0.945.
-  Ablación sin la nota oficial: F1(Derogado) = 0.694.
-- **Jerarquía (norma):** CV F1-macro = 0.824 ± 0.071.
-
-## Conclusiones
-El motor semántico supera al baseline BM25 en la calidad del ranking (Recall@5, MRR@5,
-NDCG@5), capturando sinonimia terminológica. La reformulación de la vigencia a nivel de
-artículo con las notas oficiales del SPIJ corrigió el problema del corpus 99.3 % vigente
-de la entrega parcial (donde F1 de la clase derogada era 0), logrando un clasificador
-balanceado con F1 alto en ambas clases. SHAP confirma que ambos modelos se apoyan en
-señales textuales correctas e interpretables.
-
-## Licencia
-MIT License. Uso académico. Los datos pertenecen al Ministerio de Justicia del Perú (SPIJ).
-
----
-
-# SPIJ Scraper
-
-Scraper modular para extraer metadatos de normas del portal SPIJ (Ministerio de Justicia del Perú).
+Los datos provienen de los endpoints internos del Sistema Peruano de Información Jurídica (SPIJ) del Ministerio de Justicia. El corpus consta de 1,035 normas vigentes y derogadas extraídas mediante un scraper propio. Los datos son semi-estructurados e incluyen campos como el texto completo en HTML, tipo de norma, estado de vigencia, nivel jerárquico y relaciones de citas inter-normativas.
 
 **✨ Nueva funcionalidad:** Validación automática de vigencia de normas antes del scraping.
 
@@ -143,8 +90,21 @@ El scraper ahora puede detectar automáticamente si una norma sigue vigente:
 | `export` | Exportar resultados a CSV/JSON |
 | `list-versions` | Ver historial de versiones |
 
-## Notas importantes
+## Notas importante
 
 - **Rate limiting**: Se recomienda usar `--rate-limit 2.0` o superior para validación
 - **Robots.txt**: El scraper respeta las políticas del sitio
 - **Performance**: La validación es más lenta pero más precisa
+
+## Conclusiones y Trabajo Futuro
+
+* **Infraestructura Implementada:** Se construyó y ejecutó exitosamente la infraestructura técnica de un motor de búsqueda semántica para leyes peruanas sobre el corpus real del SPIJ. El sistema consta de cinco módulos construidos en Python operando en producción.
+* **Extracción de Datos:** El scraper modular logró autenticarse en las APIs del SPIJ y recolectar un total de 1,035 normas junto con 1,839 citas inter-normativas en aproximadamente 22 minutos de ejecución. Adicionalmente, el parser implementado permite segmentar textos en artículos y clasificar cuatro tipos de relación en las citas.
+* **Rendimiento de los Modelos de Búsqueda:** Se evaluó un motor semántico (paraphrase-multilingual-mpnet-base-v2 con FAISS) contra un baseline léxico (BM25) utilizando 12 consultas curadas. El modelo BM25 alcanzó un Precision@5 de 0.550 y un MRR@5 de 0.778. Por su parte, el modelo semántico superó al léxico en Recall@5 obteniendo 0.325 (una mejora de 0.032), demostrando su capacidad de capturar la sinonimia terminológica que el modelo léxico pierde.
+* **Clasificación y Explicabilidad:** El proyecto deja disponibles clasificadores supervisados (Regresión Logística y Random Forest sobre TF-IDF) con sus respectivos análisis de explicabilidad basados en SHAP.
+* **Limitaciones:** El conjunto de datos extraído presenta un desbalance pronunciado con 1,028 normas vigentes frente a solo 7 derogadas. Asimismo, el corpus actual de 1,035 normas no representa el universo completo del SPIJ, el cual asciende a más de 25,000 normas.
+* **Trabajo Futuro:** Los siguientes pasos del proyecto incluyen ampliar el scraping para incorporar normas derogadas explícitamente. También se proyecta desarrollar una interfaz web para el buscador e integrar un sistema de re-ranking por nivel jerárquico para priorizar leyes frente a resoluciones.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para más detalles.
