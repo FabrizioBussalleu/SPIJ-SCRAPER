@@ -1,5 +1,0 @@
---- DEBUGGING H1370891 ---
-✅ Detail fetched
-Status: False
-Msg: SIN EFECTO: (*) DEJADA SIN EFECTO por el Artículo 1 de la Resolución de Contraloría N° 162-2025-CG , publicada el 22 abril 2025. CONCORDANCIAS: R.N° 316-2024-CG (Aprueban la Directiva N° 009-2024-CG/PREVI “Evalua
-Clean text start: CONTRALORÍA GENERAL Aprueban la Directiva Nº 002-2024-CG/PREVI “Rendición de Cuentas y Transferencia de Gestión” RESOLUCIÓN DE CONTRALORÍA Nº 105-2024-CG (*) (SEPARATA ESPECIAL) (*) DEJADA SIN EFECTO por el Artículo 1 de la Resolución de Contraloría N° 162-2025-CG , publicada el 22 abril 2025. CONCORDANCIAS: R.N° 316-2024-CG (Aprueban la Directiva N° 009-2024-CG/PREVI “Evaluación a la presentación del Informe de Rendición de Cuentas Anual”) Lima, 29 de febrero de 2024 VISTOS: La Hoja Informativa

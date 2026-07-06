@@ -1,12 +1,15 @@
-CV F1-macro (5-fold): 0.4742 +/- 0.0114
+MODELO DE JERARQUIA â€” nivel norma (Random Forest TF-IDF)
+Dataset: 1091 normas | clases={2: np.int64(417), 3: np.int64(155), 4: np.int64(502), 5: np.int64(17)}
+
+CV F1-macro (5-fold): 0.8244 +/- 0.0713
 
               precision    recall  f1-score   support
 
-    Ley/Cód.     1.0000    0.3333    0.5000         3
-   D.Supremo     0.9000    1.0000    0.9474         9
-  Resolución     0.0000    0.0000    0.0000         4
-       Otros     0.9655    1.0000    0.9825       140
+    Ley/CÃ³d.     1.0000    1.0000    1.0000        63
+   D.Supremo     1.0000    1.0000    1.0000        23
+  ResoluciÃ³n     1.0000    1.0000    1.0000        75
+       Otros     1.0000    1.0000    1.0000         3
 
-    accuracy                         0.9615       156
-   macro avg     0.7164    0.5833    0.6075       156
-weighted avg     0.9376    0.9615    0.9460       156
+    accuracy                         1.0000       164
+   macro avg     1.0000    1.0000    1.0000       164
+weighted avg     1.0000    1.0000    1.0000       164
